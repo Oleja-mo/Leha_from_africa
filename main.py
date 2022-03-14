@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from werkzeug.exceptions import abort
 from werkzeug.utils import redirect
 from data import db_session
@@ -8,12 +8,23 @@ from data.news import News
 from flask import render_template
 from forms.user import RegisterForm, LoginForm
 from forms.news import NewsForm
+from data import db_session, news_api
+
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 
+from flask import make_response
+
+
+@app.errorhandler(404)
+def not_found(error):
+    return make_response(jsonify({'error': 'Not found'}), 404)
+
 
 def main():
+    db_session.global_init("db/blogs.db")
+    app.register_blueprint(news_api.blueprint)
     db_session.global_init("db/blogs.db")
     app.run()
 
@@ -38,11 +49,9 @@ def reqister():
             return render_template('register.html', title='Регистрация',
                                    form=form,
                                    message="Такой пользователь уже есть")
-        user = User(
-            name=form.name.data,
+        user = User(name=form.name.data,
             email=form.email.data,
-            about=form.about.data
-        )
+            about=form.about.data)
         user.set_password(form.password.data)
         db_sess.add(user)
         db_sess.commit()

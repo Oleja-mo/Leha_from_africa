@@ -1,11 +1,13 @@
 import datetime
 import sqlalchemy
+from flask_login import UserMixin
 from sqlalchemy import orm
+from sqlalchemy_serializer import SerializerMixin
 
 from .db_session import SqlAlchemyBase
 
 
-class News(SqlAlchemyBase):
+class News(SqlAlchemyBase, UserMixin, SerializerMixin):
     __tablename__ = 'news'
 
     id = sqlalchemy.Column(sqlalchemy.Integer,
@@ -19,3 +21,4 @@ class News(SqlAlchemyBase):
     user_id = sqlalchemy.Column(sqlalchemy.Integer,
                                 sqlalchemy.ForeignKey("users.id"))
     user = orm.relation('User')
+    categories = orm.relation("Category", secondary="association", backref="news")
