@@ -10,11 +10,18 @@ from forms.user import RegisterForm, LoginForm
 from forms.news import NewsForm
 from data import db_session, news_api
 
-
 app = Flask(__name__)
+login_manager = LoginManager()
+login_manager.init_app(app)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 
 from flask import make_response
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    db_sess = db_session.create_session()
+    return db_sess.query(User).get(user_id)
 
 
 @app.errorhandler(404)
@@ -50,16 +57,18 @@ def reqister():
                                    form=form,
                                    message="Такой пользователь уже есть")
         user = User(name=form.name.data,
-            email=form.email.data,
-            about=form.about.data)
+                    email=form.email.data,
+                    about=form.about.data)
         user.set_password(form.password.data)
         db_sess.add(user)
         db_sess.commit()
         return redirect('/login')
     return render_template('register.html', title='Регистрация', form=form)
 
+
 login_manager = LoginManager()
 login_manager.init_app(app)
+
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -82,7 +91,7 @@ def login():
     return render_template('login.html', title='Авторизация', form=form)
 
 
-@app.route('/news',  methods=['GET', 'POST'])
+@app.route('/news', methods=['GET', 'POST'])
 @login_required
 def add_news():
     form = NewsForm()

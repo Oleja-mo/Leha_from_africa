@@ -13,6 +13,12 @@
 <header>
     <nav class="navbar navbar-light bg-light">
         <a class="navbar-brand" href="#">Наше приложение</a>
+        {% if current_user.is_authenticated %}
+        <strong>current_user.name</strong>
+        {% else %}
+        <strong>Вы не вошли в аккаунт. Чтобы создавать записи нужно <a href="/register">зарегистрироваться</a> или <a
+                href="/login">войти</a></strong>
+        {% endif %}
     </nav>
 </header>
 <!-- Begin page content -->
