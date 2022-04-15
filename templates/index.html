@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Записи в блоге</h1>
+<h1>Записи в блоге</h1> {% if current_user.is_authenticated %} <h3><a href="/news">Создать новость</a></h3>
+{% endif %}
 {% for item in news%}
 <div class="col-md6 border rounded">
     <h2>{{item.title}}</h2>

@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify
 from werkzeug.exceptions import abort
 from werkzeug.utils import redirect
 from data import db_session
-from flask_login import LoginManager, login_user, login_required, current_user
+from flask_login import LoginManager, login_user, login_required, current_user, logout_user
 from data.users import User
 from data.news import News
 from flask import render_template
@@ -88,7 +88,14 @@ def login():
         return render_template('login.html',
                                message="Неправильный логин или пароль",
                                form=form)
-    return render_template('login.html', title='Авторизация', form=form)
+    return render_template('login.html', title='Авторизация', form=form)\
+
+
+@app.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    return redirect('/')
 
 
 @app.route('/news', methods=['GET', 'POST'])

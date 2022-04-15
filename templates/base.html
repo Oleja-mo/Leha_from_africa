@@ -14,9 +14,9 @@
     <nav class="navbar navbar-light bg-light">
         <a class="navbar-brand" href="#">Наше приложение</a>
         {% if current_user.is_authenticated %}
-        <strong>current_user.name</strong>
+        <strong>Вход выполнен: {{current_user.name}}     <a href="/logout">(выход)</a></strong>
         {% else %}
-        <strong>Вы не вошли в аккаунт. Чтобы создавать записи нужно <a href="/register">зарегистрироваться</a> или <a
+        <strong>Вы не вошли в аккаунт. Чтобы писать новости нужно <a href="/register">зарегистрироваться</a> или <a
                 href="/login">войти</a></strong>
         {% endif %}
     </nav>
