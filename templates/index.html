@@ -1,49 +1,53 @@
-{% extends "base.html" %}
+<link rel="stylesheet" href="../static/css/index.css">
+<div class="post">
+    {% extends "base.html" %}
 
-{% block content %}
-<h1>Записи в блоге</h1>{% if current_user.is_authenticated %} <h3><a href="/news">Создать новость</a></h3>
-{% endif %}
-{% for item in news%}
-{% if item.is_private %}
-{% if current_user.is_authenticated and current_user == item.user %}
-<div class="col-md6 border rounded">
-    <h2>{{item.title}}</h2>
-    <div>
-        {{item.content}}
-    </div>
-    <div>
-        <strong>Ваша личная новость</strong>, Дата написания - {{item.created_date}}
-    </div>
-    <div>
-        <a href="/news/{{ item.id }}" class="btn btn-warning">
-            Изменить
-        </a>
-        <a href="/news_delete/{{ item.id }}" class="btn btn-danger">
-            Удалить
-        </a>
-    </div>
-</div>
-{% endif %}
-{% else %}
-<div class="col-md6 border rounded">
-    <h2>{{item.title}}</h2>
-    <div>
-        {{item.content}}
-    </div>
-    <div>
-        Автор - {{item.user.name}}, Дата написания - {{item.created_date}}
-    </div>
+    {% block content %}
+    <h1>Записи в блоге</h1>{% if current_user.is_authenticated %} <h3><a href="/news">Создать новость</a></h3>
+    {% endif %}
+    {% for item in news%}
+    {% if item.is_private %}
     {% if current_user.is_authenticated and current_user == item.user %}
-    <div>
-        <a href="/news/{{ item.id }}" class="btn btn-warning">
-            Изменить
-        </a>
-        <a href="/news_delete/{{ item.id }}" class="btn btn-danger">
-            Удалить
-        </a>
+    <div class="col-md6 border rounded pes">
+        <h2>{{item.title}}</h2>
+        <div>
+            {{item.content}}
+        </div>
+        <div>
+            <strong>Ваша личная новость</strong>, Дата написания - {{item.created_date}}
+        </div>
+        <div>
+            <a href="/news/{{ item.id }}" class="btn btn-warning">
+                Изменить
+            </a>
+            <a href="/news_delete/{{ item.id }}" class="btn btn-danger">
+                Удалить
+            </a>
+        </div>
     </div>
     {% endif %}
+    {% else %}
+    <div class="col-md6 border rounded pes" >
+        <h2>{{item.title}}</h2>
+        <div>
+            {{item.content}}
+        </div>
+        <div>
+            Автор - {{item.user.name}}, Дата написания - {{item.created_date}}
+        </div>
+        {% if current_user.is_authenticated and current_user == item.user %}
+        <div>
+            <a href="/news/{{ item.id }}" class="btn btn-warning">
+                Изменить
+            </a>
+            <a href="/news_delete/{{ item.id }}" class="btn btn-danger">
+                Удалить
+            </a>
+        </div>
+        {% endif %}
+    </div>
+    {% endif %}
+    <p></p>
+    {% endfor %}
+    {% endblock %}
 </div>
-{% endif %}
-{% endfor %}
-{% endblock %}

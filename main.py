@@ -39,7 +39,7 @@ def main():
 @app.route("/")
 def index():
     db_sess = db_session.create_session()
-    news = db_sess.query(News).filter(News.is_private != True)
+    news = db_sess.query(News)
     return render_template("index.html", news=news)
 
 
