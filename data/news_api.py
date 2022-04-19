@@ -1,6 +1,5 @@
 import flask
 from flask import jsonify
-from flask import make_response
 from . import db_session
 from .news import News
 
@@ -18,7 +17,7 @@ def get_news():
     return jsonify(
         {
             'news':
-                [item.to_dict(only=('title', 'content', 'user.name'))
+                [item.to_dict(only=('id', 'title', 'content', 'user.name'))
                  for item in news]
         }
     )

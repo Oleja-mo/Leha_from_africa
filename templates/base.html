@@ -16,7 +16,7 @@
         {% if current_user.is_authenticated %}
         <strong>Вход выполнен: {{current_user.name}}     <a href="/logout">(выход)</a></strong>
         {% else %}
-        <strong>Вы не вошли в аккаунт. Чтобы писать новости нужно <a href="/register">зарегистрироваться</a> или <a
+        <strong>Вы не вошли в аккаунт. Чтобы добавить новость нужно <a href="/register">зарегистрироваться</a> или <a
                 href="/login">войти</a></strong>
         {% endif %}
     </nav>

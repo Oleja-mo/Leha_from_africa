@@ -9,13 +9,13 @@ from flask import render_template
 from forms.user import RegisterForm, LoginForm
 from forms.news import NewsForm
 from data import db_session, news_api
+from flask import make_response
 
 app = Flask(__name__)
 login_manager = LoginManager()
 login_manager.init_app(app)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
-
-from flask import make_response
+app.config['JSON_AS_ASCII'] = False
 
 
 @login_manager.user_loader
@@ -62,7 +62,8 @@ def reqister():
         user.set_password(form.password.data)
         db_sess.add(user)
         db_sess.commit()
-        return redirect('/login')
+        login_user(user)
+        return redirect("/")
     return render_template('register.html', title='Регистрация', form=form)
 
 
@@ -88,7 +89,7 @@ def login():
         return render_template('login.html',
                                message="Неправильный логин или пароль",
                                form=form)
-    return render_template('login.html', title='Авторизация', form=form)\
+    return render_template('login.html', title='Авторизация', form=form)
 
 
 @app.route("/logout")
