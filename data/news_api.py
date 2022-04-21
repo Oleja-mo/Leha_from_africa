@@ -1,7 +1,7 @@
 import flask
 from flask import jsonify
 from . import db_session
-from .news import News
+from api.news import News
 
 blueprint = flask.Blueprint(
     'news_api',
