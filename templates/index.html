@@ -3,7 +3,8 @@
     {% extends "base.html" %}
 
     {% block content %}
-    <h1>Записи в блоге</h1>{% if current_user.is_authenticated %} <h3><a href="/news">Создать новость</a></h3>
+    <link rel="stylesheet" href="../static/css/light.css">
+    <h1 class="li">Записи в блоге</h1>{% if current_user.is_authenticated %} <h3><a class="li" href="/news">Создать новость</a></h3>
     {% endif %}
     {% for item in news%}
     {% if item.is_private %}
