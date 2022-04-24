@@ -164,5 +164,10 @@ def news_delete(id):
     return redirect('/')
 
 
+@app.route('/recroll')
+def recroll():
+    return render_template('recroll.html')
+
+
 if __name__ == '__main__':
     main()
