@@ -1,0 +1,10 @@
+@import url(https://fonts.googleapis.com/css?family=Rubik+One&subset=latin,cyrillic);
+.gradient-text {
+  font-family: Arial;
+  margin-left: 10%;
+  background: linear-gradient(45deg, #FF0000 25%, #00FF00 50%, #0000FF );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: #0B2349;
+  display: table;
+}
